@@ -1,0 +1,35 @@
+{
+    "version": 2,
+    "framework": "laravel",
+    "functions": {
+        "api/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        }
+    },
+    "routes": [
+        {
+            "src": "/(css|js|images|fonts|favicons)/(.*)",
+            "dest": "public/$1/$2"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_NAME": "Weather Backend",
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://weatherbackend.vercel.app",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "CACHE_DRIVER": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "array",
+        "OPENWEATHERMAP_API_KEY": "${OPENWEATHERMAP_API_KEY}"
+    }
+}
