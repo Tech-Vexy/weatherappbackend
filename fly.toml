@@ -1,0 +1,44 @@
+# fly.toml app configuration file for weatherbackend
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'weatherbackend'
+primary_region = 'jnb'
+console_command = 'php /var/www/html/artisan tinker'
+
+[build]
+  [build.args]
+    PHP_VERSION = '8.2'
+
+[env]
+  APP_ENV = 'production'
+  LOG_CHANNEL = 'stderr'
+  LOG_LEVEL = 'info'
+  LOG_STDERR_FORMATTER = 'Monolog\Formatter\JsonFormatter'
+  SESSION_DRIVER = 'cookie'
+  SESSION_SECURE_COOKIE = 'true'
+  APP_DEBUG = 'false'
+  APP_URL = 'https://weatherbackend.fly.dev'
+  CACHE_DRIVER = 'file'
+  QUEUE_CONNECTION = 'sync'
+  OPENWEATHERMAP_API_KEY = '${OPENWEATHERMAP_API_KEY}'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+  protocol = "tcp"
+  
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 550
+    soft_limit = 500
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
